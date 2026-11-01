@@ -1,62 +1,34 @@
-# Sequence Learning for Text, Music, and Audio
+# Sequence learning: text classification and trigger-word detection
 
-I implemented recurrent networks and attention components for sentence classification, music generation, date normalization, and trigger word detection. The projects connect RNN/LSTM internals with practical preprocessing, sequence generation, and evaluation workflows.
+Two notebook projects explore text classification with pretrained word vectors and audio trigger-word detection. Each records the implementation scope, saved results and limitations. They build on supplied notebook scaffolding and data.
 
-## My implementation
+## Sentence-to-emoji classification
 
-- Implemented RNN/LSTM operations, word-vector similarity, and sentence classification within the supplied notebooks.
-- Built LSTM music generation, an attention-based date-normalization model, and an audio trigger-detection workflow.
-- Implemented positional encoding, attention, and Transformer encoder-decoder components in TensorFlow.
+[Open the text-classification notebook](W2_ANSWERED/W2A2/Emoji_v3a.ipynb)
 
-## Recorded comparison: text-to-emoji classification
+Averaged pretrained GloVe embeddings with a softmax classifier are compared with an LSTM sentence model.
 
-| Model | Test accuracy |
+| Saved run | Test accuracy |
 | --- | ---: |
-| Averaged word embeddings with a softmax classifier | 91.07% |
-| LSTM sentence classifier | 83.93% |
+| Averaged-embedding baseline | 91.07% |
+| LSTM | 83.93% |
 
-In the saved runs, the simpler embedding baseline outperforms the LSTM on the provided test set. This comparison highlights the need to evaluate added model complexity against a baseline. These are saved notebook results, not newly rerun benchmarks or evidence of performance on broader text data.
+The supplied split contains 132 training and 56 test examples. The simpler baseline performs better on this small test set; broader performance is not established. Next, inspect class-level errors, out-of-vocabulary text and performance on a representative independent set.
 
-## Model snapshots
+## Audio trigger-word detection
 
-### LSTM music generation
+[Open the trigger-word notebook](W3_ANSWERED/W3A2/Trigger_word_detection_v2a.ipynb)
 
-![Saved training-loss curve for the LSTM jazz model](assets/readme/jazz-training-loss.png)
+Synthetic audio examples and spectrograms feed a sequence model that detects “activate” and triggers a chime.
 
-The loss curve comes from the saved training run for the jazz generation model.
+![Saved spectrogram and predicted trigger probabilities](assets/readme/trigger-word-detection.png)
 
-### Trigger word detection
+The saved run reports approximately 92.39% development-set accuracy. Time-step accuracy alone does not establish event-level reliability. A meaningful next evaluation would measure missed triggers and false activations per hour across speakers, noise and recording conditions.
 
-![Audio spectrogram and trigger word probabilities](assets/readme/trigger-word-detection.png)
+## Reproduction requirements
 
-The saved audio example shows the input spectrogram and predicted activation probabilities over time.
+The original environment has not been pinned or revalidated. The text notebook expects `data/glove.6B.50d.txt` in addition to the supplied CSV files. The audio notebook expects raw and example audio, development arrays and model weights. These large inputs are not all included. Python, NumPy, TensorFlow/Keras, Matplotlib and audio-processing dependencies are required; compatible versions and inputs must be restored before running.
 
-### Transformer positional encoding
+## Attribution
 
-![Sinusoidal positional encoding across positions and embedding dimensions](assets/readme/positional-encoding.png)
-
-The encoding visualization shows how position information varies across the embedding dimensions.
-
-## Projects
-
-| Project | Implementation |
-| --- | --- |
-| [RNN and LSTM building blocks](W1_ANSWERED/W1A1/Building_a_Recurrent_Neural_Network_Step_by_Step.ipynb) | Forward propagation and backpropagation through recurrent cells. |
-| [Jazz generation](W1_ANSWERED/W1A3/Improvise_a_Jazz_Solo_with_an_LSTM_Network_v4.ipynb) | Training an LSTM sequence model and sampling musical outputs. |
-| [Word-vector similarity and analogies](W2_ANSWERED/W2A1/Operations_on_word_vectors_v2a.ipynb) | Cosine similarity and analogy completion with pretrained embeddings. |
-| [Text-to-emoji classification](W2_ANSWERED/W2A2/Emoji_v3a.ipynb) | Sentence classification with embedding-based and LSTM models. |
-| [Date translation with attention](W3_ANSWERED/W3A1/Neural_machine_translation_with_attention_v4a.ipynb) | An attention-based encoder-decoder for normalizing human-readable dates. |
-| [Trigger word detection](W3_ANSWERED/W3A2/Trigger_word_detection_v2a.ipynb) | Audio preprocessing, synthetic training examples, and sequence predictions. |
-| [Transformer implementation](W4_ANSWERED/W4A1/C5_W4_A1_Transformer_Subclass_v1.ipynb) | Positional encoding, attention, and encoder-decoder layers in TensorFlow. |
-
-## Run locally
-
-The notebooks use Python, NumPy, TensorFlow/Keras, Matplotlib, pandas, h5py, and audio-processing utilities. Open Jupyter from the selected notebook directory. Restore the embeddings, datasets, pretrained weights, or audio files referenced by that notebook before running its cells in order. Some notebooks require versions compatible with their original TensorFlow/Keras APIs.
-
-Figures and metrics on this page are taken from saved notebook outputs. A fresh environment and full execution have not been verified for this documentation update.
-
-The word-vector similarity and analogy components are implemented. The optional debiasing section remains unfinished.
-
-## Acknowledgements
-
-Developed from exercises in Andrew Ng's Deep Learning Specialization by DeepLearning.AI. The original problem statements, starter code, supplied utilities, diagrams, datasets, and pretrained models belong to their respective authors. Existing third-party attribution and licenses are retained.
+Adapted from DeepLearning.AI’s Deep Learning Specialization. Original notebook scaffolding, utilities, datasets, diagrams and pretrained embeddings or model weights belong to their respective authors. Saved outputs have not been regenerated for this presentation update.
